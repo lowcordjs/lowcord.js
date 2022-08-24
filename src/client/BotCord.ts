@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import EventEmitter from 'events';
 import { WebSocketManager } from './ws/WebSocketManager';
-import { BotCordOptions, ClientInfo } from '../constants/Constants';
+import { BotCordOptions, ClientInfo, IprovideStatus, OPCODE } from '../constants/Constants';
 import RESThandler from './rest/APIpoints'
 
 
@@ -34,28 +34,6 @@ export class BotCord extends EventEmitter {
   public rest!: RESThandler
   constructor(private options: BotCordOptions) {
     super();
-
-    // this.info.avatarUrl = null;
-
-    // this.info.avatarCode = null
-
-    // this.info.bot = null;
-
-    // this.info.discriminator = null;
-
-    // this.info.nameWithTag = null
-
-    // this.info.flags = null;
-
-    // // this.info.guilds = null;
-
-    // this.info.id = null;
-
-    // this.info.mfa_enabled = null;
-
-    // this.info.username = null;
-
-    // this.info.verified = null;
     
     this.options = options;
 
@@ -63,7 +41,7 @@ export class BotCord extends EventEmitter {
   }
   async joinWorld(token: string) {
     this.rest.token = token
-    this.socket.connectClient(token, this.options.intents);
+    this.socket.connectClient(token, this.options.intents)
   }
   get pictureUrl() {
     return this._info.avatarUrl
@@ -94,6 +72,13 @@ export class BotCord extends EventEmitter {
   }
   get verified() {
     return this._info.verified
+  }
+  provideStatus(options: IprovideStatus){
+    options.since = null
+    this.socket.sendSocket(JSON.stringify({
+        op: OPCODE.THREE,
+        d: options
+    }))
   }
   set info(info: ClientInfo){
     this._info = {

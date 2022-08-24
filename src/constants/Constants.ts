@@ -101,6 +101,27 @@ export interface ClientInfo {
  },
 }
 
+export const ACTIVITY_TYPE = {
+    "PLAYING": 0,
+    "STREAMING": 1,
+    "LISTENING": 2,
+    "WATCHING": 3,
+    "CUSTOM": 4,
+    "COMPETING": 5,
+}
+
+export interface IprovideStatus {
+
+        since?: null ,
+        activities: {
+            name: string,
+            type: number,
+            url?: string
+        }[],
+        status:'online' | 'dnd' | 'idle' | 'invisible' | 'offline',
+        afk: boolean
+    
+}
 
 export const API_VERSION = 'v10'
 export const APi_URL = "https://discord.com/api"
