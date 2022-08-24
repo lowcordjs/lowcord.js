@@ -1,28 +1,29 @@
 import EventEmitter from 'events';
 import WebSocket from 'ws';
 import { Heartbeat, Identify, Payload, GATEWAY } from '../../constants/Payloads';
-
+import { OPCODE } from '../../constants/Constants';
+import { calcIntnet } from '../../helpers/Calculate_intents';
 export class WebSocketManager extends EventEmitter {
   private socket = new WebSocket(GATEWAY);
-  private ackRecieved: boolean = false;
-  private interval: number = 0;
-
+  private ackRecieved = false;
+  private interval = 0;
   constructor(private client: any) {
     super();
     this.client = client;
   }
-  async connectClient(token: string) {
+  async connectClient(token: string, intents: number[]) {
     try {
       this.socket.on('message', async data => {
+        if (intents.length == 0) throw Error(`no intents detected!`);
         const payload: Payload = JSON.parse(data.toString());
-
-        if (payload.op === 10) {
+        const op_code = payload.op;
+        if (op_code === OPCODE.TEN) {
           this.interval = (await this.heartbeat(payload.d.heartbeat_interval)) as any;
 
-          await this.identify(token);
-        } else if (payload.op == 11) {
+          this.identify(token, intents);
+        } else if (op_code == OPCODE.ELEVEN) {
           this.ackRecieved = true;
-        } else if (payload.op == 9) {
+        } else if (op_code == OPCODE.NINE) {
           throw Error('Invalid gateway session');
         }
         if (payload.t) {
@@ -35,15 +36,13 @@ export class WebSocketManager extends EventEmitter {
   }
   async heartbeat(ms: number) {
     return setInterval(() => {
-      this.socket.send(
-        JSON.stringify(Heartbeat),
-      );
+      this.socket.send(JSON.stringify(Heartbeat));
     }, ms);
   }
-  identify(token: string) {
+  identify(token: string, intents: number[]) {
     Identify.d.token = token;
+    if (intents.length == 0) throw Error(`no intents detected!`);
+    Identify.d.intents = calcIntnet(intents);
     this.socket.send(JSON.stringify(Identify));
   }
 }
-
-export default WebSocketManager;
