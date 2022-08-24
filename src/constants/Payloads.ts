@@ -7,7 +7,7 @@ export const Identify = {
   op: 2,
   d: {
     token: '',
-    intents: undefined as any,
+    intents: 3243773,
     properties: {
       $os: 'linux',
       $browser: 'lowcordjs',
