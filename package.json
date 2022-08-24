@@ -1,0 +1,25 @@
+{
+  "name": "lowcord",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000z\u0000e\u0000d\u0000.\u0000j\u0000s\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zed-js/lowcord.js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zed-js/lowcord.js/issues"
+  },
+  "homepage": "https://github.com/zed-js/lowcord.js#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.2"
+  }
+}
