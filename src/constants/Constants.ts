@@ -79,3 +79,28 @@ export const INTENTS = {
 export interface BotCordOptions {
   intents: number[];
 }
+
+export interface ClientInfo {
+  verified: boolean | null,
+  username: string | null,
+  mfa_enabled: boolean | null,
+  id: string  | null,
+  flags: number  | null,
+  discriminator: string  | null,
+  bot: boolean  | null,
+  avatarUrl: string  | null,
+  avatarCode: string  | null,
+  nameWithTag: string | null
+  guilds: { 
+    channels: any[]  | null,
+    emojis: any[]  | null,
+    roles: any[]  | null,
+    users: any[]  | null,
+    features: string[]  | null,
+    default: any[] | null
+ },
+}
+
+
+export const API_VERSION = 'v10'
+export const APi_URL = "https://discord.com/api"

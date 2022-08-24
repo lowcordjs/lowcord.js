@@ -1,7 +1,11 @@
 import { INTENTS, BotCord } from '../index';
-
-const t = new BotCord({
-  intents: [INTENTS.DIRECT_MESSAGES],
+import { BOT_TOKEN } from './auth';
+const bot = new BotCord({
+  intents: [INTENTS.ALL],
 });
 
-t.joinWorld('bot-token');
+bot.on('ready', () => {
+    console.log(`ready as ${bot.nameWithTag}`)
+})
+
+bot.joinWorld(BOT_TOKEN);

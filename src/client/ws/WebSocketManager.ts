@@ -1,14 +1,13 @@
-import EventEmitter from 'events';
 import WebSocket from 'ws';
 import { Heartbeat, Identify, Payload, GATEWAY } from '../../constants/Payloads';
 import { OPCODE } from '../../constants/Constants';
 import { calcIntnet } from '../../helpers/Calculate_intents';
-export class WebSocketManager extends EventEmitter {
+import { BotCord } from '../BotCord';
+export class WebSocketManager {
   private socket = new WebSocket(GATEWAY);
   private ackRecieved = false;
   private interval = 0;
-  constructor(private client: any) {
-    super();
+  constructor(private client: BotCord) {
     this.client = client;
   }
   async connectClient(token: string, intents: number[]) {
@@ -26,9 +25,12 @@ export class WebSocketManager extends EventEmitter {
         } else if (op_code == OPCODE.NINE) {
           throw Error('Invalid gateway session');
         }
-        if (payload.t) {
-          // will continue for client constructor later...
+        if (payload.t && payload.t === "READY") {
+          
+          const {default: module } = await import(`./payload-events/${payload.t}.${"js" || "ts"}`)
+          module(this.client, payload)
         }
+        
       });
     } catch (err) {
       throw Error(err as any);
