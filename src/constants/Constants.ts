@@ -97,7 +97,8 @@ export interface ClientInfo {
     roles: any[]  | null,
     users: any[]  | null,
     features: string[]  | null,
-    default: any[] | null
+    stickers?: any[] | null,
+
  },
 }
 

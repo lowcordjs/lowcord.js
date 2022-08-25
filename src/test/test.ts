@@ -1,7 +1,7 @@
 import { INTENTS, BotCord, ACTIVITY_TYPE } from '../index';
 import { BOT_TOKEN } from './auth';
 const bot = new BotCord({
-  intents: [INTENTS.ALL],
+  intents: [INTENTS.MESSAGE_CONTENT, INTENTS.GUILDS, INTENTS.GUILD_MESSAGES, INTENTS.GUILD_MEMBERS],
 });
 
 bot.on('ready', () => {

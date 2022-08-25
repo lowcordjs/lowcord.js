@@ -26,13 +26,12 @@ export class WebSocketManager {
         } else if (op_code == OPCODE.NINE) {
           throw Error('Invalid gateway session');
         }
-        if (payload.t && payload.t === "READY") {
+        if (payload.t) {
           
           const {default: module } = await import(`./payload-events/${payload.t}.${"js" || "ts"}`)
           module(this.client, payload)
           this.sendSocket(this.socketData)
         }
-        
       });
       this.socket.on('error', (err) => {
         throw Error(err as any)
