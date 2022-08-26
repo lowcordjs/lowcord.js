@@ -1,25 +1,10 @@
+import {UserObject, RoleObject} from '../../../constants/Constants'
 export default interface IGuildMember{
     member: {
-        user: {
-            id: string,
-            username: string,
-            discriminator: string,
-            avatar: string | null,
-            bot?: boolean,
-            system?: boolean,
-            mfa_enabled?: boolean,
-            banner?: string | null,
-            accent_color?: number | null,
-            locale?: string,
-            verified?: boolean,
-            email?: string | null,
-            flags?: number,
-            premium_type?: number,
-            public_flags?: number
-        },
+        user: UserObject,
         nick?: string | null,
         avatar?: string | null,
-        roles: any[],
+        roles: RoleObject[],
         joined_at: any,
         premium_since?: any,
         deaf: boolean,
