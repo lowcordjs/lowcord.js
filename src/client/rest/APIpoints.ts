@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { API_VERSION, APi_URL } from '../../constants/Constants';
 import { headers } from '../../constants/Payloads';
-import { BotCord } from '../BotCord';
 import { Axios } from 'axios';
-
 const axios = new Axios({ baseURL: `${APi_URL}/${API_VERSION}` });
 export default class APIRequestOptions {
   private _token: string = '';
-  constructor(private client: BotCord) {
+  constructor() {
     Object.defineProperty(this, '_token', {
       enumerable: false,
     });
@@ -23,6 +21,13 @@ export default class APIRequestOptions {
     const res = await axios.get(`/guilds/${id}/channels`, {
       headers: headers,
     });
+    return JSON.parse(res.data)
+  }
+   async getChannel(channelId: string){
+
+    const res = await axios.get(`/channels/${channelId}`, {
+      headers: headers,
+    })
     return JSON.parse(res.data)
   }
   async getGuildUsers(id: string) {

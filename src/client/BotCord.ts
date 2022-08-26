@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import EventEmitter from 'events';
+import * as EventEmitter from 'events';
 import { WebSocketManager } from './ws/WebSocketManager';
 import { BotCordOptions, ClientInfo, IprovideStatus, OPCODE } from '../constants/Constants';
 import RESThandler from './rest/APIpoints'
@@ -37,7 +37,7 @@ export class BotCord extends EventEmitter {
     
     this.options = options;
 
-    this.rest = new RESThandler(this)
+    this.rest = new RESThandler()
   }
   async joinWorld(token: string) {
     this.rest.token = token

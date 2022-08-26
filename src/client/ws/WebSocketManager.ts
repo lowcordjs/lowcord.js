@@ -1,4 +1,4 @@
-import WebSocket from 'ws';
+import * as WebSocket from 'ws';
 import { Heartbeat, Identify, Payload, GATEWAY } from '../../constants/Payloads';
 import { OPCODE } from '../../constants/Constants';
 import { calcIntnet } from '../../helpers/Calculate_intents';

@@ -33,5 +33,9 @@ export default async function (bot_cord: BotCord, payload: Payload) {
   };
   //   bot_cord.info.verified = payloadUser.verified;
 
+  /**
+   * When client is ready.
+   * @event bot_cord#ready
+   */
   bot_cord.emit(Events.READY);
 }

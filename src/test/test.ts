@@ -16,4 +16,6 @@ bot.on('ready', () => {
     console.log(`ready as ${bot.nameWithTag}`)
 })
 
+
+
 bot.joinWorld(BOT_TOKEN);
