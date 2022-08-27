@@ -1,3 +1,4 @@
 export enum Events {
-    READY = "ready"
+    READY = "ready",
+    MESSAGE_CREATE = "messageCreate"
 }

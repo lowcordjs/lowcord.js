@@ -1,7 +1,10 @@
+import {RoleObject, EmojiObject, Sticker} from '../../../constants'
+
 export default interface IGuildStructure {
     id: string,
     name: string,
     icon: string | null,
+    iconUrl: string | null,
     icon_hash?: string | null,
     splash: string | null,
     discovery_splash: string | null,
@@ -15,65 +18,8 @@ export default interface IGuildStructure {
     verification_level: number,
     default_message_notifications: number,
     explicit_content_filter: number,
-    roles:{
-        id: string,
-        name: string,
-        color: number,
-        hoist: boolean,
-        icon?: string | null,
-        unicode_emoji?: string | null,
-        position: number,
-        permissions: string,
-        managed: boolean,
-        mentionable: boolean,
-        tags?: {
-            bot_id?: string,
-            integration_id?: string,
-            premium_subscriber?: null
-        }
-    }[],
-    emojis:{
-        id: string | null,
-        name: string | null,
-        roles:{
-            id: string,
-            name: string,
-            color: number,
-            hoist: boolean,
-            icon?: string | null,
-            unicode_emoji?: string | null,
-            position: number,
-            permissions: string,
-            managed: boolean,
-            mentionable: boolean,
-            tags?: {
-                bot_id?: string,
-                integration_id?: string,
-                premium_subscriber?: null
-            }
-        }[],
-        user?: {
-            id: string,
-            username: string,
-            discriminator: string,
-            avatar: string | null,
-            bot?: boolean,
-            system?: boolean,
-            mfa_enabled?: boolean,
-            banner?: string | null,
-            accent_color?: number | null,
-            locale?: string,
-            verified?: boolean,
-            email?: string | null,
-            flags?: number,
-            premium_type?: number,
-            public_flags?: number
-        },
-        require_colons?: boolean,
-        managed?: boolean,
-        animated?: boolean,
-        available?: boolean
-    }[],
+    roles:RoleObject[],
+    emojis:EmojiObject[],
     features:["ANIMATED_ICON" | "VERIFIED" | "NEWS" | "VANITY_URL" | "DISCOVERABLE" | "MORE_EMOJI" | "INVITE_SPLASH" | "BANNER" | "COMMUNITY"],
     mfa_level: number,
     application_id: number | null,
@@ -102,35 +48,6 @@ export default interface IGuildStructure {
         }[],
     },
     nsfw_level: number,
-    stickers?: {
-        id: string,
-        pack_id?: string | null,
-        name: string,
-        description: string | null,
-        tags: string,
-        asset?: string,
-        type: number,
-        format_type: number,
-        available?: boolean,
-        guild_id?: string | null,
-        user?: {
-            id: string,
-            username: string,
-            discriminator: string,
-            avatar: string | null,
-            bot?: boolean,
-            system?: boolean,
-            mfa_enabled?: boolean,
-            banner?: string | null,
-            accent_color?: number | null,
-            locale?: string,
-            verified?: boolean,
-            email?: string | null,
-            flags?: number,
-            premium_type?: number,
-            public_flags?: number
-        },
-        sort_value?: number
-    }[],
+    stickers?: Sticker[],
     premium_progress_bar_enabled: boolean
 }

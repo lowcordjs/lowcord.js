@@ -3,15 +3,16 @@ import * as EventEmitter from 'events';
 import { WebSocketManager } from './ws/WebSocketManager';
 import { BotCordOptions, ClientInfo, IprovideStatus, OPCODE } from '../constants/Constants';
 import RESThandler from './rest/APIpoints'
+import {Message} from '../events-posts'
 
 
 interface ClientEvents {
     ready: () => void;
+    messageCreate: (message: Message) => void;
   }
 
 export declare interface BotCord {
     rest: RESThandler,
-
     on<Event extends keyof ClientEvents>(
         event: Event,
         listener: ClientEvents[Event]

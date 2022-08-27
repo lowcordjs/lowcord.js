@@ -1,5 +1,7 @@
 import MemberPartial from '../client/rest/interfaces/IGuildMember'
-
+import GuildObject from '../client/rest/interfaces/IGuildStructure'
+import { Stream } from 'node:stream'
+import {Collection, Message} from '../events-posts'
 export enum OPCODE {
   ZERO = 0,
   ONE = 1,
@@ -496,12 +498,12 @@ export interface SelectOptionStructure {
 }
 
 export interface ResolvedDataObject {
-  users?: Map<string, UserObject>,
-  members?: Map<string, MemberPartial>,
-  roles?: Map<string, RoleObject>,
-  channels?: Map<string, ChannelObject>,
-  messages?: Map<string, MessageObject>,
-  attachments?: Map<string, AttachmentObject>
+  users?: Collection<string, UserObject>,
+  members?: Collection<string, MemberPartial>,
+  roles?: Collection<string, RoleObject>,
+  channels?: Collection<string, ChannelObject>,
+  messages?: Collection<string, MessageObject>,
+  attachments?: Collection<string, AttachmentObject>
 
 }
 
@@ -513,33 +515,33 @@ export interface ModalSubmitData {
 export interface ChannelObject {
   id: string,
   type: number,
-  guildId?: string,
+  guild_id?: string,
   position?: number,
-  permissionOverwrites?: PermissionOverwritesObject,
+  permission_overwrites?: PermissionOverwritesObject,
   name?: string | null,
   topic?: string | null,
   nsfw?: boolean,
-  lastMessageId?: string | null,
+  last_messageId?: string | null,
   bitrate?: number,
-  userLimit?: number,
-  rateLimitPerUser?: number,
+  user_limit?: number,
+  rate_limit_per_user?: number,
   recipients?: UserObject[],
   icon?: string | null,
-  ownerId?: string | null,
-  applicationId?: string,
-  parentId?: string | null,
-  lastPinTimestamp?: string | null,
-  rtcRegion?: string | null,
-  videoQualityMode?: number,
-  messageCount?: number,
-  memberCount?: number,
-  threadMetadata?: ThreadMetadateObject,
+  owner_id?: string | null,
+  application_id?: string,
+  parent_id?: string | null,
+  last_pin_timestamp?: string | null,
+  rtc_region?: string | null,
+  video_quality_mode?: number,
+  message_count?: number,
+  member_count?: number,
+  thread_metadata?: ThreadMetadateObject,
   member?: ThreadMemberObject,
-  defaultAutoArchiveDuration?: number,
+  default_auto_archive_duration?: number,
   permissions?: string,
   flags?: number,
-  totalMessageSent?: number
-
+  total_message_sent?: number,
+  sendMessage(options: MessageSendOptions): Promise<Message>
 }
 
 export interface ThreadMemberObject {
@@ -603,27 +605,77 @@ export interface Sticker{
   sort_value?: number
 }
 
+export interface MessageMentionsMember {
+  id: string;
+  username: string;
+  discriminator: string;
+  avatar: string | null;
+  bot?: boolean;
+  system?: boolean;
+  mfaEnabled?: boolean;
+  banner?: string | null;
+  accent_color?: number | null;
+  locale?: string;
+  verified?: boolean;
+  flags?: number;
+  premiumType?: number;
+  publicFlags?: number;
+  nameWithTag: string;
+  avatarCode: string | null;
+  avatarUrl: string | null;
+  member: MemberPartial[]
+}
+
+export type ParseAllowedMentionsOption = "everyone" | "users" | "roles"
+
+export interface MessageAllowedMentionsOption {
+  parse?: ParseAllowedMentionsOption[],
+  roles?: string[],
+  users?: string[],
+  replied_user?: boolean
+}
+
+export type FileType = string | Buffer | Stream
+
+export interface MessageSendOptions {
+  content?: string,
+  tts?: boolean,
+  embeds?: EmbedObject[],
+  allowed_mentions?: MessageAllowedMentionsOption,
+  message_reference?: MessageRefrenceStructure,
+  components?: MessageComponentDataStructure[],
+  sticker_ids?: string[],
+  files?: FileType[],
+  payload_json?: string,
+  attachments?: AttachmentObject[],
+  flags?: number
+}
+
 export interface MessageObject {
   id: string,
+  channel_id: string,
+  channel: ChannelObject,
+  guild: GuildObject,
   author: UserObject
   content: string,
   timestamp: string,
-  editedTimestamp: string | null,
+  edited_timestamp: string | null,
   tts: boolean,
-  mentionEveryone: boolean,
-  mentions: UserObject[],
-  mentionRoles: RoleObject[],
-  mentionChannels?: ChannelMentionObject[],
+  mention_everyone: boolean,
+  mentions: MessageMentionsMember[],
+  mention_roles: RoleObject[],
+  mention_channels?: ChannelMentionObject[],
   attachments: AttachmentObject[],
   embeds: EmbedObject[],
   reactions?: ReactionObject[],
   nonce?: number | string,
   pinned: boolean,
-  webhookId?: string,
+  webhook_id?: string,
   type: number,
+  member?: MemberPartial
   activity?: MessageActivityStructure,
   application?: ApplicationObject,
-  applicationId?: string,
+  application_id?: string,
   message_reference?: MessageRefrenceStructure,
   flags?: number,
   referenced_message?: MessageObject | null,
@@ -633,7 +685,7 @@ export interface MessageObject {
   sticker_items?: StickerItem[],
   stickers?: Sticker[],
   position?: number
-
+  guild_id: string,
 }
 
 export interface ChannelMentionObject {

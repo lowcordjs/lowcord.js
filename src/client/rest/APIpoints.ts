@@ -2,6 +2,7 @@
 import { API_VERSION, APi_URL } from '../../constants/Constants';
 import { headers } from '../../constants/Payloads';
 import { Axios } from 'axios';
+import {MessageSendOptions} from '../../constants'
 const axios = new Axios({ baseURL: `${APi_URL}/${API_VERSION}` });
 export default class APIRequestOptions {
   private _token: string = '';
@@ -12,7 +13,7 @@ export default class APIRequestOptions {
   }
 
   async getGuild(id: string) {
-    const res = await axios.get(`/guilds/${id}`, {
+    const res = await axios.get(`/guilds/${id}?with_counts=true`, {
       headers: headers,
     });
     return JSON.parse(res.data)
@@ -22,6 +23,11 @@ export default class APIRequestOptions {
       headers: headers,
     });
     return JSON.parse(res.data)
+  }
+  async sendMessageChannel(channel_id: string, data: MessageSendOptions){
+    const res = await axios.post(`/channels/${channel_id}/messages`, JSON.stringify(data))
+
+    return res.data
   }
    async getChannel(channelId: string){
 
