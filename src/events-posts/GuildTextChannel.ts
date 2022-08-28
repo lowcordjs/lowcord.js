@@ -6,34 +6,34 @@ export class GuildTextChannel {
   private bot_cord: BotCord;
   private body: ChannelObject;
 
-  public id: string | null
-  public type: number | null
-  public guildId: string| null
-  public position: number| null
-  public permissionOverwrites: PermissionOverwritesObject| null
-  public name: string | null
-  public topic: string | null
-  public nsfw: boolean | null
-  public lastMessageId: string | null
-  public bitrate: number | null
-  public userLimit: number | null
-  public rateLimitPerUser: number | null
-  public recipients: UserObject[] | null
-  public icon: string | null
-  public ownerId: string | null
-  public applicationId: string | null
-  public parentId: string | null
-  public lastPinTimestamp: string | null
-  public rtcRegion: string | null
-  public videoQualityMode: number | null
-  public messageCount: number | null
-  public memberCount: number | null
-  public threadMetadata: ThreadMetadateObject | null
-  public member: ThreadMemberObject | null
-  public defaultAutoArchiveDuration: number | null
-  public permissions: string | null
-  public flags: number | null
-  public totalMessageSent: number | null
+  public id: string
+  public type: number
+  public guildId: string
+  public position: number
+  public permissionOverwrites: PermissionOverwritesObject
+  public name: string
+  public topic: string
+  public nsfw: boolean
+  public lastMessageId: string
+  public bitrate: number
+  public userLimit: number
+  public rateLimitPerUser: number
+  public recipients: UserObject[]
+  public icon: string
+  public ownerId: string
+  public applicationId: string
+  public parentId: string
+  public lastPinTimestamp: string
+  public rtcRegion: string
+  public videoQualityMode: number
+  public messageCount: number
+  public memberCount: number
+  public threadMetadata: ThreadMetadateObject
+  public member: ThreadMemberObject
+  public defaultAutoArchiveDuration: number
+  public permissions: string
+  public flags: number
+  public totalMessageSent: number
   
   messages: Collection<string, MessageObject>
   constructor(bot_cord: BotCord) {
@@ -45,169 +45,174 @@ export class GuildTextChannel {
     if(body.application_id){
       this.applicationId = body.application_id
     }else{
-      this.applicationId = null
+      this.applicationId = null as any
     }
 
     if(body.bitrate){
       this.bitrate = body.bitrate
     }else{
-      this.bitrate = null
+      this.bitrate = null as any
     }
 
     if(body.default_auto_archive_duration){
       this.defaultAutoArchiveDuration = body.default_auto_archive_duration
     }else{
-      this.defaultAutoArchiveDuration = null
+      this.defaultAutoArchiveDuration = null as any
     }
 
     if(body.flags){
       this.flags = body.flags
     }else{
-      this.flags = null
+      this.flags = null as any
     }
 
     if(body.guild_id){
       this.guildId = body.guild_id
     }else{
-      this.guildId = null
+      this.guildId = null as any
     }
 
     if(body.icon){
       this.icon = body.icon
     }else{
-      this.icon = null
+      this.icon = null as any
     }
 
     if(body.id){
       this.id = body.id
     }else{
-      this.id = null
+      this.id = null as any
     }
 
     if(body.last_messageId){
       this.lastMessageId = body.last_messageId
     }else{
-      this.lastMessageId = null
+      this.lastMessageId = null as any
     }
 
     if(body.last_pin_timestamp){
       this.lastPinTimestamp = body.last_pin_timestamp
     }else{
-      this.lastPinTimestamp = null
+      this.lastPinTimestamp = null as any
     }
 
     if(body.member){
       this.member = body.member
     }else{
-      this.member = null
+      this.member = null as any
     }
 
     if(body.member_count){
       this.memberCount = body.member_count
     }else{
-      this.memberCount = null
+      this.memberCount = null as any
     }
 
     if(body.message_count){
       this.messageCount = body.message_count
     }else{
-      this.messageCount = null
+      this.messageCount = null as any
     }
 
     if(body.name){
       this.name = body.name
     }else{
-      this.name = null
+      this.name = null as any
     }
 
     if(body.nsfw){
       this.nsfw = body.nsfw
     }else{
-      this.nsfw = null
+      this.nsfw = null as any
     }
 
     if(body.owner_id){
       this.ownerId = body.owner_id
     }else{
-      this.ownerId = null
+      this.ownerId = null as any
     }
 
     if(body.parent_id){
       this.parentId = body.parent_id
     }else{
-      this.parentId = null
+      this.parentId = null as any
     }
 
     if(body.permission_overwrites){
       this.permissionOverwrites = body.permission_overwrites
     }else{
-      this.permissionOverwrites = null
+      this.permissionOverwrites = null as any
     }
 
     if(body.permissions){
       this.permissions = body.permissions
     }else{
-      this.permissions = null
+      this.permissions = null as any
     }
 
     if(body.position){
       this.position = body.position
     }else{
-      this.position = null
+      this.position = null as any
     }
 
     if(body.rate_limit_per_user){
       this.rateLimitPerUser = body.rate_limit_per_user
     }else{
-      this.rateLimitPerUser = null
+      this.rateLimitPerUser = null as any
     }
 
     if(body.recipients){
       this.recipients = body.recipients
     }else{
-      this.recipients = null
+      this.recipients = null as any
     }
 
     if(body.rtc_region){
       this.rtcRegion = body.rtc_region
     }else{
-      this.rtcRegion = null
+      this.rtcRegion = null as any
     }
 
     if(body.thread_metadata){
       this.threadMetadata = body.thread_metadata
     }else{
-      this.threadMetadata = null
+      this.threadMetadata = null as any
     }
 
     if(body.topic){
       this.topic = body.topic
     }else{
-      this.topic = null
+      this.topic = null as any
     }
 
     if(body.total_message_sent){
       this.totalMessageSent = body.total_message_sent
     }else{
-      this.totalMessageSent = null
+      this.totalMessageSent = null as any
     }
 
 
     if(body.user_limit){
       this.userLimit = body.user_limit
     }else{
-      this.userLimit = null
+      this.userLimit = null as any
     }
 
     if(body.video_quality_mode){
       this.videoQualityMode = body.video_quality_mode
     }else{
-      this.videoQualityMode = null
+      this.videoQualityMode = null as any
     }
   }
 
-  async sendMessage(options: MessageSendOptions) {
+  async sendMessage(options: MessageSendOptions | string) {
     if(this.type !== channelTypes.GUILD_TEXT) return
-    await this.bot_cord.rest.sendMessageChannel(this.id as string, options)
+    if(typeof options === 'string'){
+      await this.bot_cord.rest.sendMessageChannel(this.id as string, {content: options})
+    }
+
+    await this.bot_cord.rest.sendMessageChannel(this.id as string, options as MessageSendOptions)
   }
+
 }

@@ -411,9 +411,9 @@ export interface installParamObject {
 }
 
 export interface MessageRefrenceStructure {
-  messageId?: string;
-  channelId: string;
-  guildId?: string;
+  message_id?: string;
+  channel_id?: string;
+  guild_id?: string;
   failIfNotExists?: boolean;
 }
 
