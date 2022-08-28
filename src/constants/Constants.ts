@@ -541,7 +541,6 @@ export interface ChannelObject {
   permissions?: string,
   flags?: number,
   total_message_sent?: number,
-  sendMessage(options: MessageSendOptions): Promise<Message>
 }
 
 export interface ThreadMemberObject {

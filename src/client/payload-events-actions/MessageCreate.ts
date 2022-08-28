@@ -14,7 +14,9 @@ export class MessageCreatePayload{
             this.payload = payload
     }
     async run(){
-        const channel: ChannelObject = await this.bot_cord.rest.getChannel(this.payload.d.channel_id)
+        const channelData: ChannelObject = await this.bot_cord.rest.getChannel(this.payload.d.channel_id)
+        const channel = new GuildTextChannel(this.bot_cord)
+        channel.run(channelData)
        if(channel){
         if(channel.type !== channelTypes.GUILD_TEXT) return
         const message: MessageObject = this.payload.d
@@ -32,9 +34,7 @@ export class MessageCreatePayload{
             messageData.author.avatarUrl = `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatarCode}`
             messageData.author.nameWithTag = `${message.author.username}#${message.author.discriminator}`
         }
-        if(message.channel_id){
-            messageData.channel = channel
-        }
+        messageData.channel = channel as ChannelObject
 
         const messageResult = new Message(this.bot_cord)
          messageResult.define(messageData)

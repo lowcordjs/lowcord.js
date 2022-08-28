@@ -25,8 +25,9 @@ export default class APIRequestOptions {
     return JSON.parse(res.data)
   }
   async sendMessageChannel(channel_id: string, data: MessageSendOptions){
-    const res = await axios.post(`/channels/${channel_id}/messages`, JSON.stringify(data))
-
+    const res = await axios.post(`/channels/${channel_id}/messages`, JSON.stringify(data), {
+      headers: headers
+    })
     return res.data
   }
    async getChannel(channelId: string){

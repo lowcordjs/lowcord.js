@@ -26,7 +26,7 @@ export class Message{
   // message data
   public id: string | null;
   public channelId: string | null;
-  public channel: ChannelObject | null;
+  public channel: GuildTextChannel | null;
   public guild: GuildObject | null;
   public author: UserObject | null;
   public content: string | null;
@@ -94,7 +94,7 @@ export class Message{
     }
 
     if(body.channel){
-        this.channel = body.channel
+        this.channel = body.channel as any
     }else{
         this.channel = null
     }
