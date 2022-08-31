@@ -1,6 +1,7 @@
 import { BotCord } from '../client/BotCord';
+import IGuildMember from '../client/rest/interfaces/IGuildMember';
 import GuildObject from '../client/rest/interfaces/IGuildStructure';
-import { EmojiObject, RoleObject, welcomeScreenObject, Sticker } from '../constants';
+import { EmojiObject, RoleObject, welcomeScreenObject, Sticker, fetchGuildMembersOptions, fetchGuildMember } from '../constants';
 
 export class Guild {
   private bot_cord: BotCord;
@@ -263,5 +264,22 @@ export class Guild {
     } else {
       this.widgetEnabled = null as any;
     }
+  }
+  get onlineMembersCount(){
+    return this.presenceCount
+  }
+  get offlineMembersCount(){
+    return this.memberCount - this.presenceCount - 1
+  }
+
+   async fetchGuildMembers(options?: fetchGuildMembersOptions){
+    const res: IGuildMember[] = await this.bot_cord.rest.listGuildMembers(this.id, !options?.limit? 1000 : options.limit, !options?.after? '0' : options.after)
+    return res
+  }
+  async fetchGuildMember(userId: string, options?: fetchGuildMember){
+    const res = await this.fetchGuildMembers({limit: !options?.limit? 1000 : options.limit, after: '0'})
+    let member: IGuildMember | undefined = res.find(i => i.user.id === userId)
+    if(!member) member = undefined
+    return member
   }
 }

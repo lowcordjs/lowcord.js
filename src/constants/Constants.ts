@@ -717,5 +717,13 @@ export interface welcomeScreenObject {
   }[];
 }
 
+export interface fetchGuildMembersOptions {
+  limit?: number
+  after?: string
+}
+export interface fetchGuildMember{
+  limit: number
+}
+
 export const API_VERSION = 'v10';
 export const APi_URL = 'https://discord.com/api';

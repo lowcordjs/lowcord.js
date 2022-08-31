@@ -51,6 +51,15 @@ export default class APIRequestOptions {
     }).catch(err =>{ throw new Promise((res, rej) => rej(err))})
     return JSON.parse(res.data)
   }
+  async listGuildMembers(guildId: string, limit?: number, after?: string){
+    if(!limit) limit = 1
+    if(limit && limit > 1000 || limit < 1) return new Promise((res, rej) => rej(new Error('limit number is invalid')))
+    if(!after) after = '0'
+    const res = await axios.get(`/guilds/${guildId}/members?limit=${limit}&after=${after}`, {
+      headers: headers,
+    }).catch(err =>{ throw new Promise((res, rej) => rej(err))})
+    return JSON.parse(res.data)
+  }
 
   set token(token: string) {
     this._token = token;

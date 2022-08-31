@@ -1,4 +1,4 @@
-import { INTENTS, BotCord, ACTIVITY_TYPE } from '../index';
+import { INTENTS, BotCord, ACTIVITY_TYPE, EmbedObject } from '../index';
 import { BOT_TOKEN } from './auth';
 const client = new BotCord({
   intents: [INTENTS.ALL],
@@ -7,8 +7,8 @@ const client = new BotCord({
 client.on('ready', () => {
     client.provideStatus({
         activities:[{
-            name:'a film!',
-            type: ACTIVITY_TYPE.CUSTOM,
+            name:'a game!',
+            type: ACTIVITY_TYPE.PLAYING,
         }],
         afk: false,
         status:'online'
@@ -18,9 +18,17 @@ client.on('ready', () => {
 
 client.on('messageCreate', async (message) => {
     if(message.content === 'ping'){
+        const res = await message.guild.fetchGuildMember(message.author.id)
+       console.log(res?.user)
         message.replyToMessage({content:'pong!'})
     }else if(message.content === 'count'){
-        message.replyToMessage({content: `**${message.guild.name} has ${message.guild.memberCount} members**`})
+        const embed: EmbedObject = {
+            fields:[
+                {name: '**online members**', value: `**${message.guild.onlineMembersCount}**`},
+                {name: '**offline members**', value: `**${message.guild.offlineMembersCount}**`},
+            ]
+        }
+        message.replyToMessage({embeds:[embed]})
     }
 })
 
