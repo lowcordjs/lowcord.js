@@ -19,8 +19,7 @@ import {
 } from '../constants/';
 import MemberPartial from '../client/rest/interfaces/IGuildMember'
 import { BotCord } from '../client/BotCord';
-import GuildObject from '../client/rest/interfaces/IGuildStructure';
-import { GuildTextChannel } from './';
+import { GuildTextChannel, Guild } from './';
 
 export class Message{
   private bot_cord: BotCord;
@@ -28,7 +27,7 @@ export class Message{
   public id: string;
   public channelId: string;
   public channel: GuildTextChannel;
-  public guild: GuildObject;
+  public guild: Guild;
   public author: UserObject;
   public content: string;
   public timestamp: string;
@@ -137,7 +136,7 @@ export class Message{
     }
 
     if(body.guild){
-        this.guild = body.guild
+        this.guild = body.guild as any
     }else{
         this.guild = null as any
     }

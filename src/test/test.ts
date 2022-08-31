@@ -11,7 +11,7 @@ client.on('ready', () => {
             type: ACTIVITY_TYPE.CUSTOM,
         }],
         afk: false,
-        status:'dnd'
+        status:'online'
     })
     console.log(`ready as ${client.nameWithTag}`)
 });
@@ -19,7 +19,9 @@ client.on('ready', () => {
 client.on('messageCreate', async (message) => {
     if(message.content === 'ping'){
         message.replyToMessage({content:'pong!'})
-        }
+    }else if(message.content === 'count'){
+        message.replyToMessage({content: `**${message.guild.name} has ${message.guild.memberCount} members**`})
+    }
 })
 
 

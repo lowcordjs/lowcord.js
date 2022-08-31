@@ -1,8 +1,7 @@
 import {Payload} from '../../constants/Payloads'
 import {ChannelObject, channelTypes, MessageObject} from '../../constants'
-import GuildObject from '../rest/interfaces/IGuildStructure'
 import { BotCord } from '../BotCord'
-import {GuildTextChannel, Message} from '../../events-posts'
+import {GuildTextChannel, Message, Guild} from '../../events-posts'
 import {Events} from '../../constants/Events'
 
 
@@ -20,13 +19,14 @@ export class MessageCreatePayload{
        if(channel){
         if(channel.type !== channelTypes.GUILD_TEXT) return
         const message: MessageObject = this.payload.d
-        let guild: GuildObject = await this.bot_cord.rest.getGuild(message.guild_id)
-        if(!message.guild_id) guild = {} as any
+        const guildData = await this.bot_cord.rest.getGuild(message.guild_id)
+        const guild: Guild = new Guild(this.bot_cord)
+        guild.define(guildData)
         // NOTE: not finished yet.
         
         const messageData: MessageObject = message
         if(message.guild_id){
-            messageData.guild = guild
+            messageData.guild = guild as any
             messageData.guild.iconUrl = `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`
         }
         if(messageData.author){
