@@ -60,6 +60,12 @@ export default class APIRequestOptions {
     }).catch(err =>{ throw new Promise((res, rej) => rej(err))})
     return JSON.parse(res.data)
   }
+  async getMessage(guildId: string, channelId: string, messageId: string){
+    const res = await axios.get(`/channels/${guildId}/${channelId}/${messageId}`, {
+      headers: headers,
+    }).catch(err =>{ throw new Promise((res, rej) => rej(err))})
+    return JSON.parse(res.data)
+  }
 
   set token(token: string) {
     this._token = token;

@@ -4,7 +4,6 @@ import {Collection} from './'
 
 export class GuildTextChannel {
   private bot_cord: BotCord;
-  private body: ChannelObject;
 
   public id: string
   public type: number
@@ -34,14 +33,15 @@ export class GuildTextChannel {
   public permissions: string
   public flags: number
   public totalMessageSent: number
-  
-  messages: Collection<string, MessageObject>
+
+  _messages: Collection<string, MessageObject> = new Collection()
   constructor(bot_cord: BotCord) {
     this.bot_cord = bot_cord;
   }
 
   run(body: ChannelObject){
     this.type = body.type
+    
     if(body.application_id){
       this.applicationId = body.application_id
     }else{
@@ -214,5 +214,7 @@ export class GuildTextChannel {
 
     await this.bot_cord.rest.sendMessageChannel(this.id as string, options as MessageSendOptions)
   }
+
+
 
 }

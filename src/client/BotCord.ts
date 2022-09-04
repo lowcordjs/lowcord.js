@@ -9,6 +9,7 @@ import {Message} from '../events-posts'
 interface ClientEvents {
     ready: () => void;
     messageCreate: (message: Message) => void;
+    messageDelete: (message: Message) => void;
   }
 
 export declare interface BotCord {

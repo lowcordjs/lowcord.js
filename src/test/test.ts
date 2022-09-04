@@ -32,5 +32,9 @@ client.on('messageCreate', async (message) => {
     }
 })
 
+client.on('messageDelete', () => {
+    console.log(`messaged deleted`)
+})
+
 
 client.joinWorld(BOT_TOKEN);
