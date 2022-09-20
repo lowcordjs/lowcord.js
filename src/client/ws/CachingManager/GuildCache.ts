@@ -1,7 +1,7 @@
 import { Payload } from '../../../constants';
 import { BotCord } from '../../BotCord';
 import { Guild } from '../../../events-posts/';
-import GuildObject from '../../rest/interfaces/IGuildStructure'
+import GuildObject from '../../rest/interfaces/IGuildStructure';
 export class GuildCache {
   constructor(private bot_cord: BotCord, private payload: Payload, private eventName: any) {
     this.bot_cord = bot_cord;

@@ -1,6 +1,6 @@
 import { Payload } from '../../../constants';
 import { BotCord } from '../../BotCord';
-import { ChannelCache, GuildCache } from './'
+import { ChannelCache, GuildCache } from './';
 export class Caching {
   constructor(private bot_cord: BotCord, private payload: Payload, private eventName: any) {
     this.bot_cord = bot_cord;
@@ -18,9 +18,9 @@ export class Caching {
       // const voice_states = this.payload.d.voice_states
       // const members = this.payload.d.members
       // const threads = this.payload.d.threads
-      
-      await new ChannelCache(this.bot_cord, this.payload, this.eventName)._run()
-      await new GuildCache(this.bot_cord, this.payload, this.eventName)._run()
+
+      await new ChannelCache(this.bot_cord, this.payload, this.eventName)._run();
+      await new GuildCache(this.bot_cord, this.payload, this.eventName)._run();
     }
   }
 }

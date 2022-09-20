@@ -1,7 +1,7 @@
 import { Payload, ChannelObject } from '../../../constants';
 import { BotCord } from '../../BotCord';
 import { GuildTextChannel } from '../../../events-posts/';
-import {MessageCache} from './MessageCache'
+import { MessageCache } from './MessageCache';
 export class ChannelCache {
   constructor(private bot_cord: BotCord, private payload: Payload, private eventName: any) {
     this.bot_cord = bot_cord;
@@ -17,7 +17,7 @@ export class ChannelCache {
           channelClass.run(channel);
           this.bot_cord.channels.set(channel.id, channelClass);
         }
-        await new MessageCache(this.bot_cord, this.payload, this.eventName)._run(channel.id)
+        await new MessageCache(this.bot_cord, this.payload, this.eventName)._run(channel.id);
       }
     }
   }

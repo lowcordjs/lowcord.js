@@ -10,15 +10,14 @@ export class MessageCache {
     if (this.eventName == 'GUILD_CREATE') {
       const messageClass = new Message(this.bot_cord);
 
-        const messages: MessageObject[] = await this.bot_cord.rest.getChannelMessages(channelId);
-        for (const message of messages) {
-          const checkMessage = this.bot_cord.messages.get(message.id);
-          if (!checkMessage) {
-            messageClass.define(message);
-            this.bot_cord.messages.set(message.id, messageClass);
-          }
+      const messages: MessageObject[] = await this.bot_cord.rest.getChannelMessages(channelId);
+      for (const message of messages) {
+        const checkMessage = this.bot_cord.messages.get(message.id);
+        if (!checkMessage) {
+          messageClass.define(message);
+          this.bot_cord.messages.set(message.id, messageClass);
         }
       }
     }
   }
-
+}
