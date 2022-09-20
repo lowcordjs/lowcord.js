@@ -2,6 +2,8 @@ import MemberPartial from '../client/rest/interfaces/IGuildMember';
 import GuildObject from '../client/rest/interfaces/IGuildStructure';
 import { Stream } from 'node:stream';
 import { Collection } from '@lowcordjs/collection';
+
+
 export enum OPCODE {
   ZERO = 0,
   ONE = 1,
@@ -688,9 +690,11 @@ export interface MessageObject {
   guild_id: string;
 }
 
+
+
 export interface ChannelMentionObject {
   id: string;
-  guildId: string;
+  guild_id: string;
   type:
     | channelTypes.ANNOUNCEMENT_THREAD
     | channelTypes.DM

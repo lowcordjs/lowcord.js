@@ -12,7 +12,7 @@ export class MessageCreatePayload{
             this.bot_cord = bot_cord
             this.payload = payload
     }
-    async run(){
+    async _run(){
         const channelData: ChannelObject = await this.bot_cord.rest.getChannel(this.payload.d.channel_id)
         const channel = new GuildTextChannel(this.bot_cord)
         channel.run(channelData)
@@ -38,6 +38,10 @@ export class MessageCreatePayload{
 
         const messageResult = new Message(this.bot_cord)
          messageResult.define(messageData)
+         const checkCollection = this.bot_cord.messages.get(messageResult.id)
+         if(!checkCollection){
+            this.bot_cord.messages.set(messageResult.id, messageResult)
+         }
          this.bot_cord.emit(Events.MESSAGE_CREATE, messageResult)
         
        }

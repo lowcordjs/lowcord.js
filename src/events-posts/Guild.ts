@@ -1,7 +1,8 @@
+import { Collection } from '@lowcordjs/collection/dist';
 import { BotCord } from '../client/BotCord';
 import IGuildMember from '../client/rest/interfaces/IGuildMember';
 import GuildObject from '../client/rest/interfaces/IGuildStructure';
-import { EmojiObject, RoleObject, welcomeScreenObject, Sticker, fetchGuildMembersOptions, fetchGuildMember, ChannelObject } from '../constants';
+import { EmojiObject, RoleObject, welcomeScreenObject, Sticker, fetchGuildMembersOptions, fetchGuildMember } from '../constants';
 import {GuildTextChannel} from './'
 export class Guild {
   private bot_cord: BotCord;
@@ -58,10 +59,11 @@ export class Guild {
   public iconHash: string | null;
   public iconUrl: string | null;
   public channels: GuildTextChannel
+  public collection: Collection<string, Guild>
 
   constructor(bot_cord: BotCord) {
     this.bot_cord = bot_cord;
-
+    this.collection = bot_cord.guilds
   }
   define(body: GuildObject) {
     if (body.afk_channel_id) {

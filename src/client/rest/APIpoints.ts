@@ -39,6 +39,12 @@ export default class APIRequestOptions {
     }).catch(err =>{ throw new Promise((res, rej) => rej(err))})
     return JSON.parse(res.data)
   }
+  async getChannelMessages(channelId: string){
+    const res = await axios.get(`/channels/${channelId}/messages`, {
+      headers: headers,
+    }).catch(err =>{ throw new Promise((res, rej) => rej(err))})
+    return JSON.parse(res.data)
+  }
   async getGuildUsers(id: string) {
     const res = await axios.get(`/guilds/${id}/members`, {
       headers: headers,

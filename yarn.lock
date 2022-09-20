@@ -51,10 +51,10 @@
   "resolved" "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz"
   "version" "1.2.1"
 
-"@lowcordjs/collection@^1.0.8":
-  "integrity" "sha512-1GGtdnVpxEnsDA0vj8N7GxDZw55YFysFoNlSN9Np01WjclUb+rArGGwIVhekvLhPTXdg4lrsHh7Ww97cLSyVvw=="
-  "resolved" "https://registry.npmjs.org/@lowcordjs/collection/-/collection-1.0.8.tgz"
-  "version" "1.0.8"
+"@lowcordjs/collection@^1.0.9":
+  "integrity" "sha512-tIcqFdoQsM4NQMdJ+ZMqWW88uJChdI/xV7pFwcc99aGEQ7OKq47qArdrBmbqsE1YjYaLP6Wq5CYjLujlyGaZ9w=="
+  "resolved" "https://registry.npmjs.org/@lowcordjs/collection/-/collection-1.0.9.tgz"
+  "version" "1.0.9"
 
 "@microsoft/tsdoc-config@0.16.1":
   "integrity" "sha512-2RqkwiD4uN6MLnHFljqBlZIXlt/SaUT6cuogU1w2ARw4nKuuppSmR0+s+NC+7kXBQykd9zzu0P4HtBpZT5zBpQ=="

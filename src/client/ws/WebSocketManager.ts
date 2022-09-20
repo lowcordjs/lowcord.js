@@ -3,11 +3,12 @@ import { Heartbeat, Identify, Payload, GATEWAY } from '../../constants/Payloads'
 import { OPCODE } from '../../constants/Constants';
 import { calcIntnet } from '../../helpers/Calculate_intents';
 import { BotCord } from '../BotCord';
+import { Caching } from './CachingManager';
 export class WebSocketManager {
   private socket = new WebSocket(GATEWAY);
   private ackRecieved = false;
   private interval = 0;
-  private socketData!: any
+  private socketData!: any;
   constructor(private client: BotCord) {
     this.client = client;
   }
@@ -27,19 +28,15 @@ export class WebSocketManager {
           throw Error('Invalid gateway session');
         }
         if (payload.t) {
-          if(payload.t == 'GUILD_CREATE'){
-            console.log(payload.d.members)
-          }
-          const {default: module } = await import(`./payload-events/${payload.t}.${"js" || "ts"}`)
-          module(this.client, payload)
-          this.sendSocket(this.socketData)
+          await new Caching(this.client, payload, payload.t)._run()
+          const { default: module } = await import(`./payload-events/${payload.t}.${'js' || 'ts'}`);
+          module(this.client, payload);
+          this.sendSocket(this.socketData);
         }
       });
-      this.socket.on('error', (err) => {
-        throw Error(err as any)
-
-      })
-
+      this.socket.on('error', err => {
+        throw Error(err as any);
+      });
     } catch (err) {
       throw Error(err as any);
     }
@@ -56,7 +53,7 @@ export class WebSocketManager {
     this.socket.send(JSON.stringify(Identify));
   }
   sendSocket(data: any) {
-    this.socketData = data
-    this.socket.send(this.socketData)
+    this.socketData = data;
+    this.socket.send(this.socketData);
   }
 }

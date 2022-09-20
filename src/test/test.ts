@@ -15,6 +15,9 @@ client.on('ready', () => {
         status:'online'
     })
     console.log(`ready as ${client.nameWithTag}`)
+    client.guilds.map(s => {
+        console.log(s)
+    })
 });
 
 client.on('messageCreate', async (message) => {
@@ -29,13 +32,14 @@ client.on('messageCreate', async (message) => {
                 {name: '**offline members**', value: `**${message.guild.offlineMembersCount}**`},
             ]
         }
-        message.replyToMessage({embeds:[embed]})
+        message.channel.collection.get('1021839070118281266')?.sendMessage({content:'hello world'})
+        
         
     }
 })
 
-client.on('messageDelete', () => {
-    console.log(`messaged deleted`)
+client.on('guildCreate', (guild) => {
+    
 })
 
 

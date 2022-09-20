@@ -2,7 +2,7 @@ import {
   ChannelObject,
   MessageSendOptions,
   channelTypes,
-  MessageObject,
+  
   PermissionOverwritesObject,
   UserObject,
   ThreadMemberObject,
@@ -15,7 +15,7 @@ import { Collection } from '@lowcordjs/collection';
 export class GuildTextChannel {
   private bot_cord: BotCord;
 
-  public id: string;
+  public id: id;
   public type: number;
   public guildId: string;
   public position: number;
@@ -43,9 +43,10 @@ export class GuildTextChannel {
   public permissions: string;
   public flags: number;
   public totalMessageSent: number;
-  public collection: Collection<id, GuildTextChannel> = new Collection()
+  public collection: Collection<string, GuildTextChannel>
   constructor(bot_cord: BotCord) {
     this.bot_cord = bot_cord;
+    this.collection = bot_cord.channels
   }
 
   run(body: ChannelObject) {
