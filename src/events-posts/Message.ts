@@ -20,6 +20,8 @@ import {
 import MemberPartial from '../client/rest/interfaces/IGuildMember'
 import { BotCord } from '../client/BotCord';
 import { GuildTextChannel, Guild } from './';
+import { Collection } from '@lowcordjs/collection'
+
 
 export class Message{
   private bot_cord: BotCord;
@@ -58,6 +60,7 @@ export class Message{
   public stickers: Sticker[]
   public position: number
   public guildId: string
+  public collection: Collection<string, MessageObject> = new Collection();
 
   constructor(bot_cord: BotCord) {
     this.bot_cord = bot_cord;

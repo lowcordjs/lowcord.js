@@ -27,7 +27,9 @@ export class WebSocketManager {
           throw Error('Invalid gateway session');
         }
         if (payload.t) {
-          
+          if(payload.t == 'GUILD_CREATE'){
+            console.log(payload.d.members)
+          }
           const {default: module } = await import(`./payload-events/${payload.t}.${"js" || "ts"}`)
           module(this.client, payload)
           this.sendSocket(this.socketData)
@@ -35,6 +37,7 @@ export class WebSocketManager {
       });
       this.socket.on('error', (err) => {
         throw Error(err as any)
+
       })
 
     } catch (err) {

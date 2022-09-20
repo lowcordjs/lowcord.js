@@ -1,5 +1,6 @@
 export enum Events {
     READY = "ready",
     MESSAGE_CREATE = "messageCreate",
-    MESSAGE_DELETE = "messageDelete"
+    MESSAGE_DELETE = "messageDelete",
+    GUILD_CREATE = 'guildCreate'
 }

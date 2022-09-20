@@ -1,5 +1,6 @@
 import { INTENTS, BotCord, ACTIVITY_TYPE, EmbedObject } from '../index';
 import { BOT_TOKEN } from './auth';
+import {Collection} from '@lowcordjs/collection'
 const client = new BotCord({
   intents: [INTENTS.ALL],
 });
@@ -29,6 +30,7 @@ client.on('messageCreate', async (message) => {
             ]
         }
         message.replyToMessage({embeds:[embed]})
+        
     }
 })
 

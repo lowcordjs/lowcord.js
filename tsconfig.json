@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
-    "target": "ES6",
+    "target": "ES2016",
     "sourceMap": true,
+    "rootDir": "./src",
     "outDir": "./dist",
     "noImplicitAny": true,
     "declaration": true,
     "skipLibCheck": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

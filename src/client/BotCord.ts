@@ -3,13 +3,14 @@ import * as EventEmitter from 'events';
 import { WebSocketManager } from './ws/WebSocketManager';
 import { BotCordOptions, ClientInfo, IprovideStatus, OPCODE } from '../constants/Constants';
 import RESThandler from './rest/APIpoints'
-import {Message} from '../events-posts'
+import {Guild, Message} from '../events-posts'
 
 
 interface ClientEvents {
     ready: () => void;
     messageCreate: (message: Message) => void;
     messageDelete: (message: Message) => void;
+    guildCreate: (guild: Guild) => void;
   }
 
 export declare interface BotCord {

@@ -38,7 +38,7 @@ export class MessageCreatePayload{
 
         const messageResult = new Message(this.bot_cord)
          messageResult.define(messageData)
-        this.bot_cord.emit(Events.MESSAGE_CREATE, messageResult)
+         this.bot_cord.emit(Events.MESSAGE_CREATE, messageResult)
         
        }
     }
