@@ -3,7 +3,6 @@ import GuildObject from '../client/rest/interfaces/IGuildStructure';
 import { Stream } from 'node:stream';
 import { Collection } from '@lowcordjs/collection';
 
-
 export enum OPCODE {
   ZERO = 0,
   ONE = 1,
@@ -690,8 +689,6 @@ export interface MessageObject {
   guild_id: string;
 }
 
-
-
 export interface ChannelMentionObject {
   id: string;
   guild_id: string;
@@ -722,14 +719,33 @@ export interface welcomeScreenObject {
 }
 
 export interface fetchGuildMembersOptions {
-  limit?: number
-  after?: string
+  limit?: number;
+  after?: string;
 }
-export interface fetchGuildMember{
-  limit: number
+export interface fetchGuildMember {
+  limit: number;
 }
 
-export type id = string
+export type AllowedMentionsTypes = 'roles' | 'users' | 'everyone';
+
+export interface AllowedMentionsObject {
+  parse: AllowedMentionsTypes[],
+  roles: id[];
+  users: id[];
+  replied_user: boolean;
+}
+export interface MessageUpdateOptions {
+  content?: string;
+  embeds?: EmbedObject[];
+  flags?: number;
+  allowed_mentions?: AllowedMentionsObject;
+  components?: MessageComponentDataStructure[],
+  files?: FileType[],
+  payload_json?: string,
+  attachments?: AttachmentObject[]
+}
+
+export type id = string;
 
 export const API_VERSION = 'v10';
 export const APi_URL = 'https://discord.com/api';

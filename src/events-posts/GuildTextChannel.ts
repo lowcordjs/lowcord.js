@@ -2,12 +2,13 @@ import {
   ChannelObject,
   MessageSendOptions,
   channelTypes,
-  
   PermissionOverwritesObject,
   UserObject,
   ThreadMemberObject,
   ThreadMetadateObject,
-  id
+  id,
+  MessageUpdateOptions,
+  MessageObject,
 } from '../constants/';
 import { BotCord } from '../client/BotCord';
 import { Collection } from '@lowcordjs/collection';
@@ -43,13 +44,13 @@ export class GuildTextChannel {
   public permissions: string;
   public flags: number;
   public totalMessageSent: number;
-  public collection: Collection<string, GuildTextChannel>
+  public collection: Collection<string, GuildTextChannel>;
   constructor(bot_cord: BotCord) {
     this.bot_cord = bot_cord;
-    this.collection = bot_cord.channels
+    this.collection = bot_cord.channels;
   }
 
-  run(body: ChannelObject) {
+  _run(body: ChannelObject) {
     this.type = body.type;
 
     if (body.application_id) {
@@ -224,4 +225,25 @@ export class GuildTextChannel {
     await this.bot_cord.rest.sendMessageChannel(this.id as string, options as MessageSendOptions);
   }
 
+  async updateMessage(options: MessageUpdateOptions | string, messageId: id) {
+    if (this.type !== channelTypes.GUILD_TEXT) return;
+    if (typeof options == 'string') {
+      await this.bot_cord.rest.editMessage(this.id as string, messageId, { content: options });
+    } else {
+      await this.bot_cord.rest.editMessage(this.id, messageId, options);
+    }
+  }
+  async deleteMessage(messageId: id) {
+    if (this.type !== channelTypes.GUILD_TEXT) return;
+    await this.bot_cord.rest.deleteMessage(this.id, messageId);
+  }
+  async bulkDelete(info:{count: number}){
+    if (this.type !== channelTypes.GUILD_TEXT) return;
+    const messages: string[] = []
+    const messagesGet: MessageObject[] = await this.bot_cord.rest.getChannelMessages(this.id)
+    for (const message of messagesGet.slice(0,info.count)){
+      messages.push(message.id)
+    }
+     await this.bot_cord.rest.bullkDelete({messages: messages}, this.id)
+  }
 }

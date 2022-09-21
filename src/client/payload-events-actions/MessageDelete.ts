@@ -14,7 +14,7 @@ export class MessageDeletePayload {
   async _run() {
     const channelData: ChannelObject = await this.bot_cord.rest.getChannel(this.payload.d.channel_id);
     const channel = new GuildTextChannel(this.bot_cord);
-    channel.run(channelData);
+    channel._run(channelData);
     if (channel) {
       if (channel.type !== channelTypes.GUILD_TEXT) return;
       const message: MessageObject = this.payload.d;

@@ -14,7 +14,7 @@ export class MessageCache {
       for (const message of messages) {
         const checkMessage = this.bot_cord.messages.get(message.id);
         if (!checkMessage) {
-          messageClass.define(message);
+          messageClass._run(message);
           this.bot_cord.messages.set(message.id, messageClass);
         }
       }

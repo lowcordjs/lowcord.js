@@ -14,11 +14,10 @@ export class GuildCreatePayload {
     const guild: GuildObject = this.payload.d;
     const guildClass = new Guild(this.bot_cord);
     const check = this.bot_cord.guilds.get(guild.id);
-    guildClass.define(guild);
+    guildClass._run(guild);
     if (!check) {
       this.bot_cord.guilds.set(guild.id, guildClass);
     }
-
     this.bot_cord.emit(Events.GUILD_CREATE, guildClass);
   }
 }

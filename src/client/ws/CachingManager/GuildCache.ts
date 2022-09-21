@@ -13,7 +13,7 @@ export class GuildCache {
       const guildClass = new Guild(this.bot_cord);
       const check = this.bot_cord.guilds.get(guild.id);
       if (!check) {
-        guildClass.define(guild);
+        guildClass._run(guild);
         this.bot_cord.guilds.set(guild.id, guildClass);
       }
     }

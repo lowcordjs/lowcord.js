@@ -14,7 +14,7 @@ export class ChannelCache {
       for (const channel of channels) {
         const checkChannel = this.bot_cord.channels.get(channel.id);
         if (!checkChannel) {
-          channelClass.run(channel);
+          channelClass._run(channel);
           this.bot_cord.channels.set(channel.id, channelClass);
         }
         await new MessageCache(this.bot_cord, this.payload, this.eventName)._run(channel.id);

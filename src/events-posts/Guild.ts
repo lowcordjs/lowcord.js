@@ -65,7 +65,7 @@ export class Guild {
     this.bot_cord = bot_cord;
     this.collection = bot_cord.guilds
   }
-  define(body: GuildObject) {
+  _run(body: GuildObject) {
     if (body.afk_channel_id) {
       this.afkChannelId = body.afk_channel_id;
     } else {

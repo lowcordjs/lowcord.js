@@ -1,6 +1,5 @@
 import { INTENTS, BotCord, ACTIVITY_TYPE, EmbedObject } from '../index';
 import { BOT_TOKEN } from './auth';
-import { Collection } from '@lowcordjs/collection';
 const client = new BotCord({
   intents: [INTENTS.ALL],
 });
@@ -24,18 +23,8 @@ client.on('ready', () => {
 
 client.on('messageCreate', async message => {
   if (message.content === 'ping') {
-    const res = await message.guild.fetchGuildMember(message.author.id);
-    console.log(res?.user);
-    message.replyToMessage({ content: 'pong!' });
-  } else if (message.content === 'count') {
-    const embed: EmbedObject = {
-      fields: [
-        { name: '**online members**', value: `**${message.guild.onlineMembersCount}**` },
-        { name: '**offline members**', value: `**${message.guild.offlineMembersCount}**` },
-      ],
-    };
-    message.channel.collection.get('1021839070118281266')?.sendMessage({ content: 'hello world' });
-  }
+     await message.channel.bulkDelete({count: 2})
+  } 
 });
 
 client.on('messageUpdate', (oldMessage, newMessage) => {
@@ -53,9 +42,6 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
     ],
   };
   oldMessage.replyToMessage({ embeds: [embed] });
-});
-client.on('messageDelete', msg => {
-  console.log(msg.content);
 });
 
 client.joinWorld(BOT_TOKEN);
