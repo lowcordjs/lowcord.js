@@ -292,7 +292,7 @@ export interface RoleObject {
   color: number;
   hoist: boolean;
   icon?: string | null;
-  unicodeEmoji?: string | null;
+  unicode_emoji?: string | null;
   position: number;
   permissions: string;
   managed: boolean;
@@ -743,6 +743,15 @@ export interface MessageUpdateOptions {
   files?: FileType[],
   payload_json?: string,
   attachments?: AttachmentObject[]
+}
+
+export interface MessageReactionAddGateway{
+  user_id: id,
+  channel_id: id,
+  message_id: id,
+  guild_id?: id,
+  member?: MemberPartial,
+  emoji: EmojiObject
 }
 
 export type id = string;

@@ -3,7 +3,7 @@ import * as EventEmitter from 'events';
 import { WebSocketManager } from './ws/WebSocketManager';
 import { BotCordOptions, ClientInfo, IprovideStatus, OPCODE } from '../constants/Constants';
 import RESThandler from './rest/APIpoints';
-import { Guild, Message, GuildTextChannel } from '../';
+import { Guild, Message, GuildTextChannel, GuildRole, MessageEmoji } from '../';
 import { Collection } from '@lowcordjs/collection';
 
 export interface ClientEvents {
@@ -30,6 +30,8 @@ export class BotCord extends EventEmitter {
   public messages: Collection<string, Message> = new Collection();
   public channels: Collection<string, GuildTextChannel> = new Collection();
   public guilds: Collection<string, Guild> = new Collection();
+  public roles: Collection<string, GuildRole> = new Collection();
+  public emojis: Collection<string, MessageEmoji> = new Collection();
   constructor(private options: BotCordOptions) {
     super();
 

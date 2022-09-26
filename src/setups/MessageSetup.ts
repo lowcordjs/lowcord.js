@@ -1,4 +1,5 @@
 import { BotCord, MessageObject, Guild, GuildTextChannel, ChannelObject } from '../';
+import { CDNRoutes, ImageFormat } from 'discord-api-types/v10'
 export class MessageSetup {
     constructor(private bot_cord: BotCord, public message: MessageObject){
         this.bot_cord = bot_cord
@@ -15,11 +16,11 @@ export class MessageSetup {
         guild._run(guildData)
          if(this.message.guild_id){
              this.message.guild =  guild as any
-             this.message.guild.iconUrl = `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`
+             this.message.guild.iconUrl = `https://cdn.discordapp.com/${CDNRoutes.guildIcon(guild.id, guild.icon as any, guild.icon?.startsWith('_a') ? ImageFormat.GIF : ImageFormat.PNG)}`
          }
          if(this.message.author){
              this.message.author.avatarCode = this.message.author.avatar
-             this.message.author.avatarUrl = `https://cdn.discordapp.com/avatars/${this.message.author.id}/${this.message.author.avatarCode}`
+             this.message.author.avatarUrl = `https://cdn.discordapp.com${CDNRoutes.userAvatar(this.message.author.id, this.message.author.avatarCode as any, this.message.author.avatarCode?.startsWith('_a') ? ImageFormat.GIF : ImageFormat.PNG )}`
              this.message.author.nameWithTag = `${this.message.author.username}#${this.message.author.discriminator}`;
          }
       }

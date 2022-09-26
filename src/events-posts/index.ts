@@ -1,3 +1,6 @@
 export * from './Message'
 export * from './GuildTextChannel'
 export * from './Guild'
+export * from './GuildRole'
+export * from './MessageEmoji'
+export * from './GuildMember'

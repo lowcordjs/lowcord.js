@@ -23,8 +23,7 @@ client.on('ready', () => {
 
 client.on('messageCreate', async message => {
   if (message.content === 'ping') {
-    console.log('s')
-     await message.channel.bulkDelete({count: 10}).catch(err => console.log(err))
+     await message.replyToMessage({content:message.guild.iconUrl as any})
   } 
 });
 

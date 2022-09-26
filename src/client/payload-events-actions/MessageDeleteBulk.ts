@@ -1,5 +1,5 @@
 import { Payload } from '../../constants/Payloads';
-import { ChannelObject, channelTypes, id, MessageObject } from '../../constants';
+import { ChannelObject, channelTypes, id } from '../../constants';
 import { BotCord } from '../BotCord';
 import { GuildTextChannel, Message } from '../../events-posts';
 import { Events } from '../../constants/Events';
