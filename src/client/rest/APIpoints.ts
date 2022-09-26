@@ -3,6 +3,7 @@ import { API_VERSION, APi_URL } from '../../constants/Constants';
 import { headers } from '../../constants/Payloads';
 import { Axios } from 'axios';
 import { id, MessageSendOptions, MessageUpdateOptions } from '../../constants';
+import { Routes } from 'discord-api-types/v10';
 const axios = new Axios({ baseURL: `${APi_URL}/${API_VERSION}` });
 export default class APIRequestOptions {
   private _token: string = '';
@@ -14,7 +15,7 @@ export default class APIRequestOptions {
 
   async getGuild(id: string) {
     const res = await axios
-      .get(`/guilds/${id}?with_counts=true`, {
+      .get(`${Routes.guild(id)}?with_counts=true`, {
         headers: headers,
       })
       .catch(err => {
@@ -24,7 +25,7 @@ export default class APIRequestOptions {
   }
   async getGuildChannels(id: string) {
     const res = await axios
-      .get(`/guilds/${id}/channels`, {
+      .get(Routes.guildChannels(id), {
         headers: headers,
       })
       .catch(err => {
@@ -34,7 +35,7 @@ export default class APIRequestOptions {
   }
   async sendMessageChannel(channel_id: string, data: MessageSendOptions) {
     const res = await axios
-      .post(`/channels/${channel_id}/messages`, JSON.stringify(data), {
+      .post(Routes.channelMessages(channel_id), JSON.stringify(data), {
         headers: headers,
       })
       .catch(err => {
@@ -44,7 +45,7 @@ export default class APIRequestOptions {
   }
   async getChannel(channelId: string) {
     const res = await axios
-      .get(`/channels/${channelId}`, {
+      .get(Routes.channel(channelId), {
         headers: headers,
       })
       .catch(err => {
@@ -54,7 +55,7 @@ export default class APIRequestOptions {
   }
   async getChannelMessages(channelId: string) {
     const res = await axios
-      .get(`/channels/${channelId}/messages`, {
+      .get(Routes.channelMessages(channelId), {
         headers: headers,
       })
       .catch(err => {
@@ -64,7 +65,7 @@ export default class APIRequestOptions {
   }
   async getGuildUsers(id: string) {
     const res = await axios
-      .get(`/guilds/${id}/members`, {
+      .get(Routes.guildMembers(id), {
         headers: headers,
       })
       .catch(err => {
@@ -74,7 +75,7 @@ export default class APIRequestOptions {
   }
   async getGuildUser(id: string, userId: string) {
     const res = await axios
-      .get(`/guilds/${id}/members/${userId}`, {
+      .get(Routes.guildMember(id, userId), {
         headers: headers,
       })
       .catch(err => {
@@ -88,7 +89,7 @@ export default class APIRequestOptions {
       return new Promise((res, rej) => rej(new Error('limit number is invalid')));
     if (!after) after = '0';
     const res = await axios
-      .get(`/guilds/${guildId}/members?limit=${limit}&after=${after}`, {
+      .get(`${Routes.guildMembers(guildId)}?limit=${limit}&after=${after}`, {
         headers: headers,
       })
       .catch(err => {
@@ -98,7 +99,7 @@ export default class APIRequestOptions {
   }
   async getMessage(guildId: string, channelId: string, messageId: string) {
     const res = await axios
-      .get(`/channels/${guildId}/${channelId}/${messageId}`, {
+      .get(Routes.channelMessage(channelId, messageId), {
         headers: headers,
       })
       .catch(err => {
@@ -108,7 +109,7 @@ export default class APIRequestOptions {
   }
   async editMessage(channelId: id, messageId: id, message: MessageUpdateOptions) {
     const res = await axios
-      .patch(`/channels/${channelId}/messages/${messageId}`, JSON.stringify(message), {
+      .patch(Routes.channelMessage(channelId, messageId), JSON.stringify(message), {
         headers: headers,
       })
       .catch(err => {
@@ -116,26 +117,26 @@ export default class APIRequestOptions {
       });
     return JSON.parse(res.data);
   }
-async deleteMessage(channelId: id, messageId: id){
-   await axios
-  .delete(`/channels/${channelId}/messages/${messageId}`, {
-    headers: headers,
-  })
-  .catch(err => {
-    throw new Promise((res, rej) => rej(err));
-  });
-  return undefined
-}
-async bullkDelete(messagesIds: {messages: id[]}, channelId: id){
-   await axios
-  .post(`/channels/${channelId}/messages/bulk-delete`, JSON.stringify(messagesIds), {
-    headers: headers,
-  })
-  .catch(err => {
-    throw new Promise((res, rej) => rej(err));
-  });
-  return undefined
-}
+  async deleteMessage(channelId: id, messageId: id) {
+    await axios
+      .delete(Routes.channelMessage(channelId, messageId), {
+        headers: headers,
+      })
+      .catch(err => {
+        throw new Promise((res, rej) => rej(err));
+      });
+    return undefined;
+  }
+  async bullkDelete(messagesIds: { messages: id[] }, channelId: id) {
+    await axios
+      .post(Routes.channelBulkDelete(channelId), JSON.stringify(messagesIds), {
+        headers: headers,
+      })
+      .catch(err => {
+        throw new Promise((res, rej) => rej(err));
+      });
+    return undefined;
+  }
   set token(token: string) {
     this._token = token;
     headers.Authorization = `Bot ${this._token}`;

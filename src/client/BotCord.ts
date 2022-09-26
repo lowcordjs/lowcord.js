@@ -12,6 +12,7 @@ export interface ClientEvents {
   messageDelete: (message: Message) => void;
   guildCreate: (guild: Guild) => void;
   messageUpdate: (oldMessage: Message, newMessage: Message) => void;
+  messageDeleteBulk: (message: Message) => void;
 }
 
 export declare interface BotCord {

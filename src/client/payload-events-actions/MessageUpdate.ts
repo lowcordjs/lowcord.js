@@ -4,7 +4,7 @@ import { Message } from '../../events-posts';
 import { Events } from '../../constants/Events';
 import { MessageSetup } from '../../setups'
 
-export class MessageCreatePayload {
+export class MessageUpdatePayload {
   private bot_cord: BotCord;
   private payload: Payload;
   constructor(payload: Payload, bot_cord: BotCord) {

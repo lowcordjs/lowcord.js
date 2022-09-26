@@ -23,7 +23,8 @@ client.on('ready', () => {
 
 client.on('messageCreate', async message => {
   if (message.content === 'ping') {
-     await message.channel.bulkDelete({count: 2})
+    console.log('s')
+     await message.channel.bulkDelete({count: 10}).catch(err => console.log(err))
   } 
 });
 
@@ -43,5 +44,8 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
   };
   oldMessage.replyToMessage({ embeds: [embed] });
 });
+client.on('messageDeleteBulk', (message) => {
+  console.log(message.content)
+})
 
 client.joinWorld(BOT_TOKEN);
