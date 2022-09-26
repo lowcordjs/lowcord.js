@@ -23,7 +23,9 @@ client.on('ready', () => {
 
 client.on('messageCreate', async message => {
   if (message.content === 'ping') {
-     await message.replyToMessage({content:message.guild.iconUrl as any})
+     message.guild.emojis.map(s => {
+      message.channel.sendMessage(s.getURL())
+     })
   } 
 });
 

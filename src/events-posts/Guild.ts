@@ -2,28 +2,28 @@ import { Collection } from '@lowcordjs/collection/dist';
 import { BotCord } from '../client/BotCord';
 import IGuildMember from '../client/rest/interfaces/IGuildMember';
 import GuildObject from '../client/rest/interfaces/IGuildStructure';
-import { EmojiObject, RoleObject, welcomeScreenObject, Sticker, fetchGuildMembersOptions, fetchGuildMember } from '../constants';
-import {GuildTextChannel} from './'
+import { welcomeScreenObject, Sticker, fetchGuildMembersOptions, fetchGuildMember } from '../constants';
+import {GuildTextChannel, MessageEmoji,GuildRole} from './'
 export class Guild {
   private bot_cord: BotCord;
 
   public id: string;
   public name: string;
-  public icon: string | null;
+  public icon: string;
   public splash: string | null;
-  public discoverySplash: string | null;
+  public discoverySplash: string;
   public ownerId: string;
   public permissions: string;
   public region: string | null;
-  public afkChannelId: string | null;
+  public afkChannelId: string;
   public afkTimeout: string;
   public widgetEnabled: boolean;
-  public widgetChannelId: string | null;
+  public widgetChannelId: string;
   public verificationLevel: number;
   public defaultMessageNotifications: number;
   public explicitContentFilter: number;
-  public roles: RoleObject[];
-  public emojis: EmojiObject[];
+  public roles: GuildRole[] = [];
+  public emojis: MessageEmoji[] = [];
   public features: [
     | 'ANIMATED_ICON'
     | 'VERIFIED'
@@ -58,7 +58,7 @@ export class Guild {
   public premiumProgressBarEnabled: boolean;
   public iconHash: string | null;
   public iconUrl: string | null;
-  public channels: GuildTextChannel
+  public channels: Collection<string, GuildTextChannel>
   public collection: Collection<string, Guild>
 
   constructor(bot_cord: BotCord) {
@@ -66,6 +66,7 @@ export class Guild {
     this.collection = bot_cord.guilds
   }
   _run(body: GuildObject) {
+    this.channels = this.bot_cord.channels.filter(el => el.guildId == this.id) as any
     if (body.afk_channel_id) {
       this.afkChannelId = body.afk_channel_id;
     } else {
@@ -109,10 +110,14 @@ export class Guild {
     if (body.discovery_splash) {
       this.discoverySplash = body.discovery_splash;
     } else {
-      this.discoverySplash = null;
+      this.discoverySplash = null as any;
     }
     if (body.emojis) {
-      this.emojis = body.emojis;
+      for(const emoji of body.emojis){
+        const emojiClass = new MessageEmoji(this.bot_cord)
+        emojiClass._run(emoji, this.id)
+        this.emojis.push(emojiClass)
+      }
     } else {
       this.emojis = null as any;
     }
@@ -130,7 +135,7 @@ export class Guild {
       this.icon = body.icon;
       this.iconUrl = `https://cdn.discordapp.com/icons/${body.id}/${body.icon}.png`;
     } else {
-      this.icon = null;
+      this.icon = null as any;
       this.iconUrl = null;
     }
     if (body.icon_hash) {
@@ -214,7 +219,11 @@ export class Guild {
       this.region = null as any;
     }
     if (body.roles) {
-      this.roles = body.roles;
+      for(const role of body.roles){
+        const roleClass = new GuildRole(this.bot_cord)
+        roleClass._run(role)
+        this.roles.push(roleClass)
+      }
     } else {
       this.roles = null as any;
     }

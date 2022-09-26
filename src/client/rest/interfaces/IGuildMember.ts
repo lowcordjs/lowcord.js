@@ -1,10 +1,10 @@
-import { UserObject, RoleObject } from '../../../constants/Constants';
+import { UserObject, id } from '../../../constants/Constants';
 export default interface IGuildMember {
     
         user: UserObject;
         nick?: string | null;
         avatar?: string | null;
-        roles: RoleObject[];
+        roles: id[];
         joined_at: any;
         premium_since?: any;
         deaf: boolean;

@@ -2,8 +2,10 @@
 import { API_VERSION, APi_URL } from '../../constants/Constants';
 import { headers } from '../../constants/Payloads';
 import { Axios } from 'axios';
-import { id, MessageSendOptions, MessageUpdateOptions } from '../../constants';
+import { ChannelObject, id, MessageObject, MessageSendOptions, MessageUpdateOptions, RoleObject } from '../../constants';
 import { Routes } from 'discord-api-types/v10';
+import GuildMember from './interfaces/IGuildMember'
+import GuildObject from './interfaces/IGuildStructure'
 const axios = new Axios({ baseURL: `${APi_URL}/${API_VERSION}` });
 export default class APIRequestOptions {
   private _token: string = '';
@@ -12,8 +14,7 @@ export default class APIRequestOptions {
       enumerable: false,
     });
   }
-
-  async getGuild(id: string) {
+  async getGuild(id: string): Promise<GuildObject> {
     const res = await axios
       .get(`${Routes.guild(id)}?with_counts=true`, {
         headers: headers,
@@ -23,7 +24,7 @@ export default class APIRequestOptions {
       });
     return JSON.parse(res.data);
   }
-  async getGuildChannels(id: string) {
+  async getGuildChannels(id: string): Promise<ChannelObject> {
     const res = await axios
       .get(Routes.guildChannels(id), {
         headers: headers,
@@ -33,7 +34,7 @@ export default class APIRequestOptions {
       });
     return JSON.parse(res.data);
   }
-  async sendMessageChannel(channel_id: string, data: MessageSendOptions) {
+  async sendMessageChannel(channel_id: string, data: MessageSendOptions): Promise<MessageObject> {
     const res = await axios
       .post(Routes.channelMessages(channel_id), JSON.stringify(data), {
         headers: headers,
@@ -43,7 +44,7 @@ export default class APIRequestOptions {
       });
     return JSON.parse(res.data);
   }
-  async getChannel(channelId: string) {
+  async getChannel(channelId: string): Promise<ChannelObject> {
     const res = await axios
       .get(Routes.channel(channelId), {
         headers: headers,
@@ -53,7 +54,7 @@ export default class APIRequestOptions {
       });
     return JSON.parse(res.data);
   }
-  async getChannelMessages(channelId: string) {
+  async getChannelMessages(channelId: string): Promise<MessageObject[]> {
     const res = await axios
       .get(Routes.channelMessages(channelId), {
         headers: headers,
@@ -63,7 +64,7 @@ export default class APIRequestOptions {
       });
     return JSON.parse(res.data);
   }
-  async getGuildUsers(id: string) {
+  async getGuildUsers(id: string): Promise<GuildMember[]> {
     const res = await axios
       .get(Routes.guildMembers(id), {
         headers: headers,
@@ -73,7 +74,7 @@ export default class APIRequestOptions {
       });
     return JSON.parse(res.data);
   }
-  async getGuildUser(id: string, userId: string) {
+  async getGuildUser(id: string, userId: string): Promise<GuildMember> {
     const res = await axios
       .get(Routes.guildMember(id, userId), {
         headers: headers,
@@ -83,7 +84,7 @@ export default class APIRequestOptions {
       });
     return JSON.parse(res.data);
   }
-  async listGuildMembers(guildId: string, limit?: number, after?: string) {
+  async listGuildMembers(guildId: string, limit?: number, after?: string): Promise<GuildMember[]> {
     if (!limit) limit = 1;
     if ((limit && limit > 1000) || limit < 1)
       return new Promise((res, rej) => rej(new Error('limit number is invalid')));
@@ -97,7 +98,7 @@ export default class APIRequestOptions {
       });
     return JSON.parse(res.data);
   }
-  async getMessage(guildId: string, channelId: string, messageId: string) {
+  async getMessage(guildId: string, channelId: string, messageId: string): Promise<MessageObject> {
     const res = await axios
       .get(Routes.channelMessage(channelId, messageId), {
         headers: headers,
@@ -107,7 +108,7 @@ export default class APIRequestOptions {
       });
     return JSON.parse(res.data);
   }
-  async editMessage(channelId: id, messageId: id, message: MessageUpdateOptions) {
+  async editMessage(channelId: id, messageId: id, message: MessageUpdateOptions): Promise<MessageObject> {
     const res = await axios
       .patch(Routes.channelMessage(channelId, messageId), JSON.stringify(message), {
         headers: headers,
@@ -117,7 +118,7 @@ export default class APIRequestOptions {
       });
     return JSON.parse(res.data);
   }
-  async deleteMessage(channelId: id, messageId: id) {
+  async deleteMessage(channelId: id, messageId: id): Promise<void> {
     await axios
       .delete(Routes.channelMessage(channelId, messageId), {
         headers: headers,
@@ -127,7 +128,7 @@ export default class APIRequestOptions {
       });
     return undefined;
   }
-  async bullkDelete(messagesIds: { messages: id[] }, channelId: id) {
+  async bullkDelete(messagesIds: { messages: id[] }, channelId: id): Promise<void> {
     await axios
       .post(Routes.channelBulkDelete(channelId), JSON.stringify(messagesIds), {
         headers: headers,
@@ -136,6 +137,26 @@ export default class APIRequestOptions {
         throw new Promise((res, rej) => rej(err));
       });
     return undefined;
+  }
+  async getRole(guildId: id, roleId: id): Promise<RoleObject>{
+    const res = await axios
+    .get(Routes.guildRole(guildId, roleId), {
+      headers: headers,
+    })
+    .catch(err => {
+      throw new Promise((res, rej) => rej(err));
+    });
+  return JSON.parse(res.data);
+  }
+  async getRoles(guildId: id): Promise<RoleObject>{
+    const res = await axios
+    .get(Routes.guildRoles(guildId), {
+      headers: headers,
+    })
+    .catch(err => {
+      throw new Promise((res, rej) => rej(err));
+    });
+  return JSON.parse(res.data);
   }
   set token(token: string) {
     this._token = token;

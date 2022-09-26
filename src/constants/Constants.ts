@@ -2,7 +2,7 @@ import MemberPartial from '../client/rest/interfaces/IGuildMember';
 import GuildObject from '../client/rest/interfaces/IGuildStructure';
 import { Stream } from 'node:stream';
 import { Collection } from '@lowcordjs/collection';
-
+import { Snowflake } from 'discord-api-types/v10'
 export enum OPCODE {
   ZERO = 0,
   ONE = 1,
@@ -754,7 +754,9 @@ export interface MessageReactionAddGateway{
   emoji: EmojiObject
 }
 
-export type id = string;
 
+export type emojiFormats = 'png' | 'jpeg' | 'webp' | 'gif' 
+export type id = Snowflake;
+export const CDN_URL = 'https://cdn.discordapp.com'
 export const API_VERSION = 'v10';
 export const APi_URL = 'https://discord.com/api';

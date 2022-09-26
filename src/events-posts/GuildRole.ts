@@ -3,7 +3,6 @@ import {
     RoleObject,
     RoleTagsStructure
   } from '../constants/';
-  import MemberPartial from '../client/rest/interfaces/IGuildMember';
   import { BotCord } from '../client/BotCord';
   import { Collection } from '@lowcordjs/collection/dist';
   import { CDNRoutes, ImageFormat } from 'discord-api-types/v10'
