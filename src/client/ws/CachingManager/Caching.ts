@@ -1,6 +1,6 @@
 import { Payload } from '../../../constants';
 import { BotCord } from '../../BotCord';
-import { ChannelCache, GuildCache } from './';
+import { ChannelCache, GuildCache, EmojiCache, RoleCache } from './';
 export class Caching {
   constructor(private bot_cord: BotCord, private payload: Payload, private eventName: any) {
     this.bot_cord = bot_cord;
@@ -8,8 +8,6 @@ export class Caching {
   }
   async _run() {
     if (this.eventName == 'GUILD_CREATE') {
-      // const emojis = this.payload.d.emojis
-      // const roles = this.payload.d.roles
       // const stickers = this.payload.d.stickers
       // const features = this.payload.d.features
       // const presences = this.payload.d.presences
@@ -19,6 +17,8 @@ export class Caching {
       // const members = this.payload.d.members
       // const threads = this.payload.d.threads
 
+      await new RoleCache(this.bot_cord, this.payload, this.eventName)._run();
+      await new EmojiCache(this.bot_cord, this.payload, this.eventName)._run();
       await new ChannelCache(this.bot_cord, this.payload, this.eventName)._run();
       await new GuildCache(this.bot_cord, this.payload, this.eventName)._run();
     }

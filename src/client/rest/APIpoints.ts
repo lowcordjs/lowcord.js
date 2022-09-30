@@ -2,7 +2,7 @@
 import { API_VERSION, APi_URL } from '../../constants/Constants';
 import { headers } from '../../constants/Payloads';
 import { Axios } from 'axios';
-import { ChannelObject, id, MessageObject, MessageSendOptions, MessageUpdateOptions, RoleObject } from '../../constants';
+import { ChannelObject, EmojiObject, id, MessageObject, MessageSendOptions, MessageUpdateOptions, RoleObject } from '../../constants';
 import { Routes } from 'discord-api-types/v10';
 import GuildMember from './interfaces/IGuildMember'
 import GuildObject from './interfaces/IGuildStructure'
@@ -151,6 +151,16 @@ export default class APIRequestOptions {
   async getRoles(guildId: id): Promise<RoleObject>{
     const res = await axios
     .get(Routes.guildRoles(guildId), {
+      headers: headers,
+    })
+    .catch(err => {
+      throw new Promise((res, rej) => rej(err));
+    });
+  return JSON.parse(res.data);
+  }
+  async getGuildEmojis(guildId: id): Promise<EmojiObject[]>{
+    const res = await axios
+    .get(Routes.guildEmojis(guildId), {
       headers: headers,
     })
     .catch(err => {

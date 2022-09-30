@@ -1,4 +1,4 @@
-import { INTENTS, BotCord, ACTIVITY_TYPE, EmbedObject } from '../index';
+import { INTENTS, BotCord, ACTIVITY_TYPE } from '../index';
 import { BOT_TOKEN } from './auth';
 const client = new BotCord({
   intents: [INTENTS.ALL],
@@ -27,23 +27,6 @@ client.on('messageCreate', async message => {
       message.channel.sendMessage(s.getURL())
      })
   } 
-});
-
-client.on('messageUpdate', (oldMessage, newMessage) => {
-  console.log(`new message: ${newMessage.content}, old message: ${oldMessage.content}`);
-  const embed: EmbedObject = {
-    fields: [
-      {
-        name: '**oldMessage**',
-        value: oldMessage.content,
-      },
-      {
-        name: '**newMessage**',
-        value: newMessage.content,
-      },
-    ],
-  };
-  oldMessage.replyToMessage({ embeds: [embed] });
 });
 client.on('messageDeleteBulk', (message) => {
   console.log(message.content)
